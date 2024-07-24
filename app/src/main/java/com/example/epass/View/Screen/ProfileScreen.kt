@@ -1,4 +1,4 @@
-package com.example.epass.screen
+package com.example.epass.View.Screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

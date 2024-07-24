@@ -1,8 +1,10 @@
-package com.example.epass.Auth
+package com.example.epass.View.Auth
 
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,20 +36,17 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.epass.Model.AuthModel
 import com.example.epass.R
 
 @Composable
 fun Login(context: Context, Navcontroller: NavController) {
 
-    var username by remember {
-        mutableStateOf(TextFieldValue(text = ""))
-    }
-    var password by remember {
-        mutableStateOf(TextFieldValue(text = ""))
+    var credentials by remember {
+        mutableStateOf(AuthModel())
     }
 
     Box(
@@ -62,7 +61,7 @@ fun Login(context: Context, Navcontroller: NavController) {
 //                horizontalAlignment = Alignment.CenterHorizontally,
                 content = {
                     Box(
-                        modifier = Modifier.padding(50.dp)
+                        modifier = Modifier.padding(20.dp)
                     )
                     Text(
                         modifier = Modifier.padding(
@@ -127,9 +126,9 @@ fun Login(context: Context, Navcontroller: NavController) {
                             .padding(15.dp)
                             .fillMaxWidth(),
                         label = { Text(text = "username") },
-                        value = username,
+                        value = credentials.username,
                         onValueChange = {
-                            username = it
+                            credentials = credentials.copy(username = it)
                         },
                         textStyle = TextStyle(
                             fontSize = 18.sp,
@@ -141,13 +140,13 @@ fun Login(context: Context, Navcontroller: NavController) {
                             .padding(horizontal = 15.dp)
                             .fillMaxWidth(),
                         label = { Text(text = "password") },
-                        value = password,
+                        value = credentials.password,
                         trailingIcon = {
                             Icons.Filled.VisibilityOff
                         },
                         visualTransformation = PasswordVisualTransformation(),
                         onValueChange = {
-                            password = it
+                            credentials = credentials.copy(password = it)
                         },
                         textStyle = TextStyle(
                             fontSize = 18.sp
@@ -158,11 +157,13 @@ fun Login(context: Context, Navcontroller: NavController) {
                             .padding(
                                 horizontal = 35.dp,
                                 vertical = 10.dp
-                            ),
+                            )
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.CenterEnd,
                         content = {
                             Row {
                                 Text(
-                                    text = "Don't have an account?  ",
+                                    text = "need help ? ",
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.SemiBold
                                 )
@@ -170,7 +171,7 @@ fun Login(context: Context, Navcontroller: NavController) {
                                     modifier = Modifier.clickable {
                                         Navcontroller.navigate("signup")
                                     },
-                                    text = "Signup",
+                                    text = "forget password",
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.SemiBold,
                                     color = Color.Blue
@@ -185,7 +186,6 @@ fun Login(context: Context, Navcontroller: NavController) {
                         Alignment.Center,
                         content = {
                             OutlinedButton(
-
                                 onClick = {
                                     Navcontroller.navigate("Home")
                                     Toast.makeText(context, "Login Clicked", Toast.LENGTH_SHORT)
@@ -206,6 +206,44 @@ fun Login(context: Context, Navcontroller: NavController) {
                                     fontSize = 24.sp,
                                     fontWeight = FontWeight.Bold,
                                     text = "Login"
+                                )
+                            }
+                        }
+                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.BottomCenter,
+                        content = {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(0.dp)
+                                    .border(2.dp, color = Color.LightGray)
+                                    .background(
+                                        color = Color.LightGray
+                                    )
+                                    .padding(
+                                        horizontal = 10.dp,
+                                        vertical = 5.dp
+                                    ),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "Don't have an account?  ",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                                Text(
+                                    modifier = Modifier.clickable {
+                                        Navcontroller.navigate("signup")
+                                    },
+                                    text = "Signup",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color.Blue
                                 )
                             }
                         }

@@ -1,4 +1,4 @@
-package com.example.epass.component
+package com.example.epass.View.component
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
@@ -7,16 +7,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.epass.Auth.Login
-import com.example.epass.Auth.Signup
-import com.example.epass.screen.HomeScreen
+import com.example.epass.View.Auth.Login
+import com.example.epass.View.Auth.Signup
+import com.example.epass.View.Screen.HomeScreen
+import com.example.epass.View.Screen.ProfileScreen
 
 
 @Composable
 fun AppNavHost(
     modefier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = NavigationItem.login.route
+    startDestination: String = NavigationItem.signup.route
 ) {
     var context = LocalContext.current
     NavHost(
@@ -32,7 +33,10 @@ fun AppNavHost(
             Signup(context = context, Navcontroller = navController)
         }
         composable(NavigationItem.home.route) {
-            HomeScreen()
+            HomeScreen(context = context, navController = navController)
+        }
+        composable(NavigationItem.profile.route) {
+            ProfileScreen()
         }
     }
 }
